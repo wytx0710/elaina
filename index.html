@@ -2,50 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <!-- 支持响应式设计的viewport设置 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>嵌入网页示例</title>
-    <!-- 内联CSS样式 -->
     <style>
-        /* 基本的CSS重置 */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        /* 确保body元素适应屏幕宽度 */
-        body {
+        body, html {
             width: 100%;
-            min-height: 100vh;
+            height: 100%;
             display: flex;
-            justify-content: center; /* 水平居中 */
-            align-items: center; /* 垂直居中 */
-            background-color: #f7f7f7; /* 背景颜色 */
+            justify-content: center;
+            align-items: center;
+            background-color: #f7f7f7;
         }
 
-        /* 样式iframe */
-        iframe {
-            width: 90%; /* 宽度自适应，也可以设置为固定宽度 */
-            height: 600px; /* 高度，根据需要调整 */
-            border: none; /* 移除边框 */
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+        .iframe-container {
+            /* 根据需要设置宽度，这里设置为100% */
+            width: 100%;
+            /* 设置一个固定的高度或者使用vh单位 */
+            height: 80vh;
+            position: relative;
         }
 
-        /* 响应式设计：当屏幕宽度小于600px时，调整iframe的尺寸 */
-        @media (max-width: 600px) {
-            iframe {
-                width: 100%;
-                height: 300px; /* 根据需要调整高度 */
-            }
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            /* 确保iframe填充整个容器 */
+            position: absolute;
+            top: 0;
+            left: 0;
         }
     </style>
 </head>
 <body>
-    <!-- 使用iframe标签嵌入网页 -->
-    <iframe src="https://flowus.cn/wytx/8a50fed9-e339-47c5-9c41-94eb606bd67e" 
-            title="Elaina——The Ashen Witch" 
-            allowfullscreen>
-    </iframe>
+    <div class="iframe-container">
+        <iframe src="https://flowus.cn/wytx/8a50fed9-e339-47c5-9c41-94eb606bd67e" 
+                title="FlowUs 息流嵌入" 
+                allowfullscreen>
+        </iframe>
+    </div>
 </body>
 </html>
