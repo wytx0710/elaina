@@ -1,0 +1,14 @@
+/* 隐藏第一个元素，类名为 flex items-center justify-between pb-2 space-x-3 的 <div> */
+.flex.items-center.justify-between.pb-2.space-x-3 {
+  display: none;
+}
+
+/* 隐藏第二个元素，类名为 bg-white1 text-t2 的 <header> */
+.bg-white1.text-t2 {
+  display: none;
+}
+
+/* 隐藏第三个元素，类名为 flex flex-col justify-center items-center py-10 pb-24 的 <div> */
+.flex.flex-col.justify-center.items-center.py-10.pb-24 {
+  display: none;
+}
