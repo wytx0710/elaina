@@ -1,32 +1,51 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <!-- 支持响应式设计的viewport设置 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elaina——The Ashen Witch</title>
+    <title>嵌入网页示例</title>
+    <!-- 内联CSS样式 -->
     <style>
-        /* 确保整个页面的高度为视口的100% */
-        html, body {
+        /* 基本的CSS重置 */
+        * {
             margin: 0;
             padding: 0;
-            height: 100%;
-            overflow: hidden; /* 可选，防止内容溢出 */
+            box-sizing: border-box;
         }
-        /* 设置iframe的宽度和高度为100%，使其自适应屏幕 */
-        .responsive-iframe {
-            position: absolute; /* 绝对定位，使其充满整个视口 */
-            left: 0;
-            top: 0;
+
+        /* 确保body元素适应屏幕宽度 */
+        body {
             width: 100%;
-            height: 100%;
-            border: 0; /* 移除边框 */
+            min-height: 100vh;
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            background-color: #f7f7f7; /* 背景颜色 */
+        }
+
+        /* 样式iframe */
+        iframe {
+            width: 90%; /* 宽度自适应，也可以设置为固定宽度 */
+            height: 600px; /* 高度，根据需要调整 */
+            border: none; /* 移除边框 */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+        }
+
+        /* 响应式设计：当屏幕宽度小于600px时，调整iframe的尺寸 */
+        @media (max-width: 600px) {
+            iframe {
+                width: 100%;
+                height: 300px; /* 根据需要调整高度 */
+            }
         }
     </style>
 </head>
 <body>
-    <!-- 将iframe包裹在一个div中，以便使用CSS样式 -->
-    <div class="responsive-iframe">
-        <iframe src="https://flowus.cn/wytx/8a50fed9-e339-47c5-9c41-94eb606bd67e" allowfullscreen></iframe>
-    </div>
+    <!-- 使用iframe标签嵌入网页 -->
+    <iframe src="https://flowus.cn/wytx/8a50fed9-e339-47c5-9c41-94eb606bd67e" 
+            title="Elaina——The Ashen Witch" 
+            allowfullscreen>
+    </iframe>
 </body>
 </html>
