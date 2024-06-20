@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elaina.one</title>
+    <title>Elaina——The Ashen Witch</title>
     <style>
         * {
             margin: 0;
@@ -21,7 +21,9 @@
         }
 
         .iframe-container {
+            /* 根据需要设置宽度，这里设置为100% */
             width: 100%;
+            /* 设置一个固定的高度或者使用vh单位 */
             height: 100%;
             position: relative;
         }
@@ -30,18 +32,12 @@
             width: 100%;
             height: 100%;
             border: none;
+            /* 确保iframe填充整个容器 */
             position: absolute;
             top: 0;
             left: 0;
         }
-
-        /* 修正后的CSS规则 */
-body div.flex.items-center.justify-between.pb-2.space-x-3,
-body div.flex.flex-col.justify-center.items-center.py-10.pb-24 {
-    display: none !important;
-}
     </style>
-</head>
 </head>
 <body>
     <div class="iframe-container">
@@ -50,5 +46,40 @@ body div.flex.flex-col.justify-center.items-center.py-10.pb-24 {
                 allowfullscreen>
         </iframe>
     </div>
+
+    <script>
+        // 等待iframe加载完成后执行
+        function injectCSSIntoIframe(iframe) {
+            // 创建CSS规则
+            var cssRules = `
+            .flex.items-center.justify-between.pb-2.space-x-3,
+            .flex.flex-col.justify-center.items-center.py-10.pb-24 {
+                display: none !important;
+            }
+            `;
+
+            // 创建一个临时的`<style>`元素并设置其内容
+            var style = document.createElement('style');
+            style.type = 'text/css';
+            style.innerHTML = cssRules;
+
+            // 将`<style>`元素添加到iframe的文档中
+            try {
+                // 尝试访问iframe的contentDocument
+                iframe.contentDocument.head.appendChild(style);
+            } catch (e) {
+                console.error('无法访问iframe内容：', e);
+            }
+        }
+
+        // 获取页面中的iframe元素
+        var iframe = document.querySelector('iframe');
+
+        // 监听iframe的load事件
+        iframe.addEventListener('load', function() {
+            // 当iframe加载完成后，注入CSS
+            injectCSSIntoIframe(this);
+        });
+    </script>
 </body>
 </html>
