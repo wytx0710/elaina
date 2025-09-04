@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>伊蕾娜——灰之魔女</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fastly.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6b46c1',
+                        secondary: '#44337a',
+                        accent: '#e9d8fd',
+                        dark: '#2d3748',
+                        title: '#5d4037' // 标题颜色
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .bg-gradient-magic {
+                background: linear-gradient(135deg, #6b46c1 0%, #44337a 100%);
+            }
+            .transition-smooth {
+                transition: all 0.3s ease-in-out;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    <!-- 语言切换器 - 填充色改为黑色 -->
+    <div class="fixed top-4 left-4 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-lg p-2 flex space-x-1">
+        <button id="lang-zh" class="lang-btn px-3 py-1 rounded-full bg-black text-white transition-smooth">中文</button>
+        <button id="lang-en" class="lang-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth">English</button>
+        <button id="lang-ca" class="lang-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth">Català</button>
+    </div>
+
+    <!-- 页面容器 -->
+    <div class="container mx-auto px-4 py-16 max-w-5xl">
+        <!-- 标题部分 - 已移除下方分界线 -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-title text-shadow" data-i18n="title">伊蕾娜——灰之魔女</h1>
+        </header>
+
+        <!-- 内容部分 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+            <!-- 图片部分 -->
+            <div class="space-y-6">
+                <div class="rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition-smooth">
+                    <img src="https://image.elaina.cat/1756963709550.gif" alt="伊蕾娜表情动图" class="w-full h-auto">
+                </div>
+                <div class="rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition-smooth">
+                    <img src="https://image.elaina.cat/1756963225558.gif" alt="伊蕾娜另一表情动图" class="w-full h-auto">
+                </div>
+            </div>
+
+            <!-- 文本部分 -->
+            <div class="bg-white rounded-2xl shadow-lg p-8">
+                <p class="text-lg mb-6 leading-relaxed" data-i18n="description1">
+                    伊蕾娜（日语：イレイナ）是于2014年开始连载，由日本轻小说作家白石定规著作、插画家あずーる负责插画的轻小说《魔女之旅》及其衍生作品中的主角，其魔女名为“灰之魔女”。伊蕾娜的生日为10月17日。
+                </p>
+                <p class="text-lg mb-6 leading-relaxed" data-i18n="description2">
+                    伊蕾娜留有一头灰白长发，披着黑色长袍，戴着三角帽，胸口别有象征魔女的胸针“星形胸饰”。伊蕾娜因向往幼时读过的小说集《妮可冒险记》中名为妮可的魔女的生活而想要和她一样去往世界各地旅行。她在14岁时拜星辰魔女芙兰为师，并在一年后便成为最高阶魔法师，获得“魔女”称号。成为魔女后，伊蕾娜环游世界各地，在旅途中她帮助了很多人，并且收下沙耶为徒，送给了她一顶魔女帽。
+                </p>
+                <p class="text-lg leading-relaxed" data-i18n="description3">
+                    伊蕾娜虽然年纪轻轻，但努力工作并精通所有魔法，性格沉稳认真，同时也充满好奇。
+                </p>
+
+                <!-- 信息卡片 -->
+                <div class="mt-8 bg-accent rounded-xl p-6">
+                    <h2 class="text-xl font-semibold mb-4 text-secondary" data-i18n="infoTitle">基本信息</h2>
+                    <ul class="space-y-2">
+                        <li class="flex items-center">
+                            <i class="fa fa-birthday-cake text-primary mr-3"></i>
+                            <span data-i18n="birthday">生日：10月17日</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-magic text-primary mr-3"></i>
+                            <span data-i18n="witchName">魔女名：灰之魔女</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fa fa-book text-primary mr-3"></i>
+                            <span data-i18n="appearance">出处：《魔女之旅》</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页脚 -->
+        <footer class="mt-16 text-center text-gray-500 text-sm">
+            <p data-i18n="footer">© 2025 elaina.cat</p>
+        </footer>
+    </div>
+
+    <script>
+        // 多语言文本数据
+        const translations = {
+            zh: {
+                title: "伊蕾娜——灰之魔女",
+                description1: "伊蕾娜（日语：イレイナ）是于2014年开始连载，由日本轻小说作家白石定规著作、插画家あずーる负责插画的轻小说《魔女之旅》及其衍生作品中的主角，其魔女名为“灰之魔女”。伊蕾娜的生日为10月17日。",
+                description2: "伊蕾娜留有一头灰白长发，披着黑色长袍，戴着三角帽，胸口别有象征魔女的胸针“星形胸饰”。伊蕾娜因向往幼时读过的小说集《妮可冒险记》中名为妮可的魔女的生活而想要和她一样去往世界各地旅行。她在14岁时拜星辰魔女芙兰为师，并在一年后便成为最高阶魔法师，获得“魔女”称号。成为魔女后，伊蕾娜环游世界各地，在旅途中她帮助了很多人，并且收下沙耶为徒，送给了她一顶魔女帽。",
+                description3: "伊蕾娜虽然年纪轻轻，但努力工作并精通所有魔法，性格沉稳认真，同时也充满好奇。",
+                infoTitle: "基本信息",
+                birthday: "生日：10月17日",
+                witchName: "魔女名：灰之魔女",
+                appearance: "出处：《魔女之旅》",
+                footer: "© 2025 elaina.cat"
+            },
+            en: {
+                title: "Elaina —— The Ashen Witch",
+                description1: "Elaina (Japanese: イレイナ) is the protagonist of the light novel series \"Majo no Tabitabi\" (Witch's Journey) and its derivatives, which began serialization in 2014. Written by Japanese light novelist Jougi Shiraishi and illustrated by Azuru, her witch name is \"The Ashen Witch\". Elaina's birthday is October 17th.",
+                description2: "Elaina has long grayish-white hair, wears a black robe, a triangular hat, and a star-shaped brooch on her chest that symbolizes a witch. Inspired by the life of the witch Niko from the novel collection \"Niko's Adventures\" she read as a child, Elaina desired to travel the world like her. At 14, she became a disciple of Fran, the Star Witch, and within a year became a high-ranking magician, earning the title of \"Witch\". After becoming a witch, Elaina traveled around the world, helping many people on her journey, taking Saya as her disciple, and giving her a witch's hat.",
+                description3: "Despite her young age, Elaina works hard, is proficient in all magic, has a calm and serious personality, and is full of curiosity.",
+                infoTitle: "Basic Information",
+                birthday: "Birthday: October 17th",
+                witchName: "Witch Name: The Ashen Witch",
+                appearance: "From: \"Majo no Tabitabi\" (Witch's Journey)",
+                footer: "© 2025 elaina.cat"
+            },
+            ca: {
+                title: "Elaina —— La Bruixa Cendra",
+                description1: "Elaina (en japonès: イレイナ) és la protagonista de la novel·la lleugera japonesa El viatge de la bruixa i les seves obres derivades, començada el 2014, escrita per l’autor Jōgi Shiraishi i amb il·lustracions d’Azuru. El seu nom de bruixa és “la Bruixa de Cendra”. L’aniversari d’Elaina és el 17 d’octubre.",
+                description2: "Elaina té una llarga cabellera grisa i blanca, porta una túnica negra i un barret de tres puntes, i al pit duu un fermall en forma d’estrella que simbolitza les bruixes. Va decidir viatjar pel món inspirada per la vida de Nique, una bruixa del recull de novel·les Les aventures de Nique que havia llegit quan era petita.",
+                description3: "Als 14 anys, Elaina es va convertir en deixebla de la Bruixa de les Estrelles, Fran, i només un any després ja va assolir el rang més alt de maga, obtenint així el títol de “bruixa”. Un cop convertida en bruixa, va recórrer el món ajudant moltes persones en els seus viatges. Durant aquest temps, també va acceptar Saya com a deixebla i li va regalar un barret de bruixa.Tot i la seva joventut, Elaina treballa amb esforç i domina totes les arts màgiques. Té un caràcter serè i responsable, i alhora està plena de curiositat.",
+                infoTitle: "Informació Bàsica",
+                birthday: "Aniversari: 17 d'octubre",
+                witchName: "Nom de Bruixa: La Bruixa de Cendra",
+                appearance: "Provença: \"El viatge de la bruixa\"",
+                footer: "© 2025 elaina.cat"
+            }
+        };
+
+        // 语言切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            
+            // 自动检测浏览器语言
+            function detectBrowserLanguage() {
+                const browserLang = navigator.language || navigator.userLanguage;
+                // 检查是否为中文（包括zh-CN, zh-TW, zh-HK等）
+                if (browserLang.startsWith('zh')) {
+                    return 'zh';
+                } else {
+                    // 其他语言默认使用英语
+                    return 'en';
+                }
+            }
+            
+            // 根据检测到的语言自动切换
+            const defaultLang = detectBrowserLanguage();
+            switchLanguage(defaultLang);
+            
+            // 语言切换函数
+            function switchLanguage(lang) {
+                // 更新按钮样式
+                langButtons.forEach(btn => {
+                    btn.classList.remove('bg-black', 'text-white');
+                    btn.classList.add('hover:bg-gray-200');
+                });
+                document.getElementById(`lang-${lang}`).classList.add('bg-black', 'text-white');
+                document.getElementById(`lang-${lang}`).classList.remove('hover:bg-gray-200');
+                
+                // 更新页面文本
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    element.textContent = translations[lang][key];
+                });
+            }
+            
+            // 绑定按钮点击事件
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.id.split('-')[1];
+                    switchLanguage(lang);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
