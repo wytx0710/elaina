@@ -36,17 +36,34 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
-    <!-- 语言切换器 - 填充色改为黑色 -->
+<body class="bg-gray-50 text-gray-800 font-sans transition-smooth">
+    <!-- 语言切换器 - 左上角 -->
     <div class="fixed top-4 left-4 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-lg p-2 flex space-x-1">
         <button id="lang-zh" class="lang-btn px-3 py-1 rounded-full bg-black text-white transition-smooth">中文</button>
         <button id="lang-en" class="lang-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth">English</button>
         <button id="lang-ca" class="lang-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth">Català</button>
     </div>
 
+    <!-- 右上角功能按钮 - 仅保留菜单按钮 -->
+    <div class="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-lg p-2 flex space-x-1">
+        <button id="menu-btn" class="function-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth" title="菜单">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+
+    <!-- 菜单 (默认隐藏) -->
+    <div id="menu-container" class="fixed top-16 right-4 z-40 bg-white rounded-xl shadow-lg w-48 hidden">
+        <ul class="py-2">
+            <li><a href="https://img.elaina.cat" class="block px-4 py-2 hover:bg-gray-100 transition-smooth" data-i18n="menuImgBed">图床</a></li>
+            <li><a href="https://pan.elaina.cat" class="block px-4 py-2 hover:bg-gray-100 transition-smooth" data-i18n="menuCloudDrive">云盘</a></li>
+            <li><a href="https://www.elaina.cat/about.html" class="block px-4 py-2 hover:bg-gray-100 transition-smooth" data-i18n="menuAbout">关于</a></li>
+            <li><a href="https://www.elaina.cat/links.html" class="block px-4 py-2 hover:bg-gray-100 transition-smooth" data-i18n="menuLinks">友链</a></li>
+        </ul>
+    </div>
+
     <!-- 页面容器 -->
     <div class="container mx-auto px-4 py-16 max-w-5xl">
-        <!-- 标题部分 - 已移除下方分界线 -->
+        <!-- 标题部分 -->
         <header class="text-center mb-12">
             <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-title text-shadow" data-i18n="title">伊蕾娜——灰之魔女</h1>
         </header>
@@ -73,7 +90,7 @@
                 </p>
                 <p class="text-lg leading-relaxed" data-i18n="description3">伊蕾娜虽然年纪轻轻，但努力工作并精通所有魔法，性格沉稳认真，同时也充满好奇。因为向往着幼时读过的旅行故事，伊蕾娜随意地进行着漫长的旅行。她在这个广阔的世界里自由地漫步，接触着形形色色有趣的人，体味着人们美好的日常生活。作为一名旅人，伊蕾娜不带有任何目的地接触着各种国家的各色人群。</p>
 
-                <!-- 信息卡片 - 背景色为#E3E3E3 -->
+                <!-- 信息卡片 -->
                 <div class="mt-8 bg-[#E3E3E3] rounded-xl p-6 text-black">
                     <h2 class="text-xl font-semibold mb-4" data-i18n="infoTitle">基本信息</h2>
                     <ul class="space-y-2">
@@ -148,7 +165,11 @@
                 emailFeaturesTitle: "免费邮箱服务特点",
                 emailFeature1: "免费注册和使用，无隐藏费用",
                 emailFeature2: "支持自定义用户名@elaina.cat格式",
-                emailSignupBtn: "立即注册邮箱"
+                emailSignupBtn: "立即注册邮箱",
+                menuImgBed: "图床",
+                menuCloudDrive: "云盘",
+                menuAbout: "关于",
+                menuLinks: "友链"
             },
             en: {
                 title: "Elaina —— The Ashen Witch",
@@ -165,7 +186,11 @@
                 emailFeaturesTitle: "Free Email Service Features",
                 emailFeature1: "Free registration and usage, no hidden fees",
                 emailFeature2: "Supports custom username@elaina.cat format",
-                emailSignupBtn: "Register Email Now"
+                emailSignupBtn: "Register Email Now",
+                menuImgBed: "Image Host",
+                menuCloudDrive: "Cloud Storage",
+                menuAbout: "About",
+                menuLinks: "Friends"
             },
             ca: {
                 title: "Elaina —— La Bruixa Cendra",
@@ -182,22 +207,28 @@
                 emailFeaturesTitle: "Característiques del servei de correu gratuït",
                 emailFeature1: "Registració i ús gratuïts, sense costos ocults",
                 emailFeature2: "S'admet el format nomd'usuari@elaina.cat personalitzat",
-                emailSignupBtn: "Registra't ara al correu"
+                emailSignupBtn: "Registra't ara al correu",
+                menuImgBed: "Xarxa d'imatges",
+                menuCloudDrive: "Disc en núvol",
+                menuAbout: "Sobre nosaltres",
+                menuLinks: "Enllaços"
             }
         };
 
-        // 语言切换功能
+        // 语言切换和菜单功能
         document.addEventListener('DOMContentLoaded', function() {
             const langButtons = document.querySelectorAll('.lang-btn');
+            const menuBtn = document.getElementById('menu-btn');
+            const menuContainer = document.getElementById('menu-container');
             
             // 自动检测浏览器语言
             function detectBrowserLanguage() {
                 const browserLang = navigator.language || navigator.userLanguage;
-                // 检查是否为中文（包括zh-CN, zh-TW, zh-HK等）
                 if (browserLang.startsWith('zh')) {
                     return 'zh';
+                } else if (browserLang.startsWith('ca')) {
+                    return 'ca';
                 } else {
-                    // 其他语言默认使用英语
                     return 'en';
                 }
             }
@@ -223,7 +254,23 @@
                 });
             }
             
-            // 绑定按钮点击事件
+            // 菜单按钮功能
+            menuBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menuContainer.classList.toggle('hidden');
+            });
+            
+            // 点击页面其他地方关闭菜单
+            document.addEventListener('click', function() {
+                menuContainer.classList.add('hidden');
+            });
+            
+            // 防止点击菜单内部时关闭
+            menuContainer.addEventListener('click', function(e) {
+                e.stopPropagation();
+            });
+            
+            // 绑定语言按钮点击事件
             langButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const lang = this.id.split('-')[1];
@@ -233,4 +280,3 @@
         });
     </script>
 </body></html>
-    
