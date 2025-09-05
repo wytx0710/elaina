@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>友链申请 - 伊蕾娜</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fastly.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6b46c1',
+                        secondary: '#44337a',
+                        accent: '#e9d8fd',
+                        dark: '#2d3748',
+                        title: '#5d4037'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .text-shadow {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            }
+            .bg-gradient-magic {
+                background: linear-gradient(135deg, #6b46c1 0%, #44337a 100%);
+            }
+            .transition-smooth {
+                transition: all 0.3s ease-in-out;
+            }
+            .form-input-focus {
+                @apply focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans transition-smooth">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-md sticky top-0 z-30">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center space-x-2">
+                <i class="fa fa-magic text-2xl text-primary"></i>
+                <span class="font-bold text-xl text-title">伊蕾娜</span>
+            </a>
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="hover:text-primary transition-smooth" data-i18n="navHome">首页</a>
+                <a href="https://img.elaina.cat" class="hover:text-primary transition-smooth" data-i18n="navImgBed">图床</a>
+                <a href="https://pan.elaina.cat" class="hover:text-primary transition-smooth" data-i18n="navCloudDrive">云盘</a>
+                <a href="https://about.elaina.cat" class="hover:text-primary transition-smooth" data-i18n="navAbout">关于</a>
+                <a href="link-exchange.html" class="text-primary font-medium" data-i18n="navLinks">友链</a>
+            </div>
+            <button class="md:hidden text-gray-700" id="mobile-menu-btn">
+                <i class="fa fa-bars text-xl"></i>
+            </button>
+        </div>
+        <!-- 移动端菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-2 flex flex-col space-y-3">
+                <a href="index.html" class="py-2 hover:text-primary transition-smooth" data-i18n="navHome">首页</a>
+                <a href="https://img.elaina.cat" class="py-2 hover:text-primary transition-smooth" data-i18n="navImgBed">图床</a>
+                <a href="https://pan.elaina.cat" class="py-2 hover:text-primary transition-smooth" data-i18n="navCloudDrive">云盘</a>
+                <a href="https://about.elaina.cat" class="py-2 hover:text-primary transition-smooth" data-i18n="navAbout">关于</a>
+                <a href="link-exchange.html" class="py-2 text-primary font-medium" data-i18n="navLinks">友链</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 语言切换器 -->
+    <div class="fixed top-16 right-4 z-40 bg-white/80 backdrop-blur-sm rounded-full shadow-lg p-2 flex space-x-1">
+        <button id="lang-zh" class="lang-btn px-3 py-1 rounded-full bg-black text-white transition-smooth">中文</button>
+        <button id="lang-en" class="lang-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth">English</button>
+        <button id="lang-ca" class="lang-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth">Català</button>
+    </div>
+
+    <!-- 页面容器 -->
+    <div class="container mx-auto px-4 py-12 max-w-5xl">
+        <!-- 标题部分 -->
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4 text-title text-shadow" data-i18n="pageTitle">友链申请</h1>
+            <p class="text-gray-600 max-w-2xl mx-auto" data-i18n="pageDescription">
+                欢迎与我们交换友情链接，共同成长。请点击下方按钮填写表单，我们会在24小时内审核并回复。
+            </p>
+        </header>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- 表单链接部分 -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-2xl shadow-lg p-6 md:p-8 h-full flex flex-col justify-center items-center text-center">
+                    <div class="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+                        <i class="fa fa-file-text-o text-4xl text-primary"></i>
+                    </div>
+                    <h3 class="text-2xl font-semibold mb-4" data-i18n="formTitle">友链申请表单</h3>
+                    <p class="text-gray-600 mb-8 max-w-md" data-i18n="formDescription">
+                        请点击下方按钮，在新打开的页面中填写友链申请信息。提交前请确保已添加本站为友链。
+                    </p>
+                    <a href="https://forms.cloud.microsoft/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAANAASlFpmlUMFo1VFdRM0xGN0ZYWEJLNUNUOEpBUDlXRS4u" 
+                       target="_blank" 
+                       rel="noopener noreferrer"
+                       class="w-full md:w-auto bg-primary hover:bg-secondary text-white font-semibold py-3 px-8 rounded-lg transition-smooth shadow-md hover:shadow-lg flex items-center justify-center">
+                        <i class="fa fa-external-link mr-2"></i>
+                        <span data-i18n="formSubmitBtn">填写申请表单</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 侧边栏信息 -->
+            <div class="space-y-6">
+                <!-- 本站信息 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 text-primary" data-i18n="ourSiteInfo">本站信息</h3>
+                    <div class="flex items-center mb-4">
+                        <img src="https://www.elaina.cat/favicon.ico" alt="伊蕾娜网站LOGO" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-medium" data-i18n="siteName">伊蕾娜</h4>
+                            <p class="text-sm text-gray-600" data-i18n="siteCategory">动漫主题网站</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 text-sm mb-4" data-i18n="ourSiteDescription">
+                        专注于《魔女之旅》及主角伊蕾娜的主题网站，提供相关资讯、图片和社区服务。
+                    </p>
+                    <div class="text-sm">
+                        <p class="mb-1"><span class="text-gray-600" data-i18n="siteUrl">网址：</span>https://elaina.cat</p>
+                        <p><span class="text-gray-600" data-i18n="siteLogo">LOGO：</span>https://www.elaina.cat/favicon.ico</p>
+                    </div>
+                </div>
+
+                <!-- 友链要求 -->
+                <div class="bg-white rounded-2xl shadow-lg p-6">
+                    <h3 class="text-xl font-semibold mb-4 text-primary" data-i18n="linkRequirements">友链要求</h3>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span data-i18n="req1">网站内容健康，无不良信息</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span data-i18n="req2">能够稳定访问，无过多广告</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span data-i18n="req3">需先添加本站为友链</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa fa-check-circle text-green-500 mt-1 mr-2"></i>
+                            <span data-i18n="req4">内容相关或互补的网站优先</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 已添加的友链展示 -->
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold mb-6 text-title" data-i18n="existingLinks">已添加的友链</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- 友链卡片示例 -->
+                <a href="https://example1.com" class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-smooth flex items-center" target="_blank" rel="noopener noreferrer">
+                    <img src="https://picsum.photos/50/50?random=1" alt="示例网站1 LOGO" class="w-12 h-12 rounded-full mr-4">
+                    <div>
+                        <h3 class="font-medium" data-i18n="linkExample1">示例网站1</h3>
+                        <p class="text-xs text-gray-600" data-i18n="linkExample1Desc">这是一个示例网站</p>
+                    </div>
+                </a>
+                
+                <a href="https://example2.com" class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-smooth flex items-center" target="_blank" rel="noopener noreferrer">
+                    <img src="https://picsum.photos/50/50?random=2" alt="示例网站2 LOGO" class="w-12 h-12 rounded-full mr-4">
+                    <div>
+                        <h3 class="font-medium" data-i18n="linkExample2">示例网站2</h3>
+                        <p class="text-xs text-gray-600" data-i18n="linkExample2Desc">这是另一个示例网站</p>
+                    </div>
+                </a>
+                
+                <a href="https://example3.com" class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-smooth flex items-center" target="_blank" rel="noopener noreferrer">
+                    <img src="https://picsum.photos/50/50?random=3" alt="示例网站3 LOGO" class="w-12 h-12 rounded-full mr-4">
+                    <div>
+                        <h3 class="font-medium" data-i18n="linkExample3">示例网站3</h3>
+                        <p class="text-xs text-gray-600" data-i18n="linkExample3Desc">这是第三个示例网站</p>
+                    </div>
+                </a>
+                
+                <a href="https://example4.com" class="bg-white rounded-xl shadow-md p-4 hover:shadow-lg transition-smooth flex items-center" target="_blank" rel="noopener noreferrer">
+                    <img src="https://picsum.photos/50/50?random=4" alt="示例网站4 LOGO" class="w-12 h-12 rounded-full mr-4">
+                    <div>
+                        <h3 class="font-medium" data-i18n="linkExample4">示例网站4</h3>
+                        <p class="text-xs text-gray-600" data-i18n="linkExample4Desc">这是第四个示例网站</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 页脚 -->
+    <footer class="mt-16 bg-gray-100 py-8">
+        <div class="container mx-auto px-4 max-w-5xl text-center text-gray-500 text-sm">
+            <p data-i18n="footer">© 2025 elaina.cat</p>
+            <p class="mt-1"><a href="https://icp.gov.moe/?keyword=20251799" target="_blank" class="hover:text-primary transition-smooth">萌ICP备20251799号</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // 多语言文本数据
+        const translations = {
+            zh: {
+                pageTitle: "友链申请",
+                pageDescription: "欢迎与我们交换友情链接，共同成长。请点击下方按钮填写表单，我们会在24小时内审核并回复。",
+                formTitle: "友链申请表单",
+                formDescription: "请点击下方按钮，在新打开的页面中填写友链申请信息。提交前请确保已添加本站为友链。",
+                formSubmitBtn: "填写申请表单",
+                ourSiteInfo: "本站信息",
+                siteName: "伊蕾娜",
+                siteCategory: "动漫主题网站",
+                ourSiteDescription: "专注于《魔女之旅》及主角伊蕾娜的主题网站，提供相关资讯、图片和社区服务。",
+                siteUrl: "网址：",
+                siteLogo: "LOGO：",
+                linkRequirements: "友链要求",
+                req1: "网站内容健康，无不良信息",
+                req2: "能够稳定访问，无过多广告",
+                req3: "需先添加本站为友链",
+                req4: "内容相关或互补的网站优先",
+                existingLinks: "已添加的友链",
+                linkExample1: "示例网站1",
+                linkExample1Desc: "这是一个示例网站",
+                linkExample2: "示例网站2",
+                linkExample2Desc: "这是另一个示例网站",
+                linkExample3: "示例网站3",
+                linkExample3Desc: "这是第三个示例网站",
+                linkExample4: "示例网站4",
+                linkExample4Desc: "这是第四个示例网站",
+                footer: "© 2025 elaina.cat",
+                navHome: "首页",
+                navImgBed: "图床",
+                navCloudDrive: "云盘",
+                navAbout: "关于",
+                navLinks: "友链"
+            },
+            en: {
+                pageTitle: "Link Exchange",
+                pageDescription: "Welcome to exchange links with us for mutual growth. Please click the button below to fill out the form, and we will review and reply within 24 hours.",
+                formTitle: "Link Exchange Form",
+                formDescription: "Please click the button below to fill out the link exchange application in a new page. Make sure you have added our site as a friend link before submitting.",
+                formSubmitBtn: "Fill Out Form",
+                ourSiteInfo: "Our Site Info",
+                siteName: "Elaina",
+                siteCategory: "Anime Theme Site",
+                ourSiteDescription: "A theme site focused on 'Witch's Journey' and the protagonist Elaina, providing related information, images and community services.",
+                siteUrl: "URL:",
+                siteLogo: "LOGO:",
+                linkRequirements: "Link Requirements",
+                req1: "Healthy website content, no bad information",
+                req2: "Stable access, no excessive advertisements",
+                req3: "Need to add our site as a friend link first",
+                req4: "Sites with relevant or complementary content are preferred",
+                existingLinks: "Existing Friend Links",
+                linkExample1: "Example Site 1",
+                linkExample1Desc: "This is an example website",
+                linkExample2: "Example Site 2",
+                linkExample2Desc: "This is another example website",
+                linkExample3: "Example Site 3",
+                linkExample3Desc: "This is the third example website",
+                linkExample4: "Example Site 4",
+                linkExample4Desc: "This is the fourth example website",
+                footer: "© 2025 elaina.cat",
+                navHome: "Home",
+                navImgBed: "Image Host",
+                navCloudDrive: "Cloud Storage",
+                navAbout: "About",
+                navLinks: "Links"
+            },
+            ca: {
+                pageTitle: "Intercanvi d'enllaços",
+                pageDescription: "Benvingut a intercanviar enllaços amb nosaltres per creixement mutu. Feu clic al botó de sota per omplir el formulari, i revisarem i respondonos en 24 hores.",
+                formTitle: "Formulari d'intercanvi d'enllaços",
+                formDescription: "Feu clic al botó de sota per omplir la sol·licitud d'intercanvi d'enllaços en una pàgina nova. Assegureu-vos d'haver afegit el nostre lloc com a enllaç amic abans d'enviar.",
+                formSubmitBtn: "Omplir formulari",
+                ourSiteInfo: "Informació del nostre lloc",
+                siteName: "Elaina",
+                siteCategory: "Lloc temàtic d'anime",
+                ourSiteDescription: "Un lloc temàtic centrat en 'El viatge de la bruixa' i la protagonista Elaina, que ofereix informació relacionada, imatges i serveis de comunitat.",
+                siteUrl: "URL:",
+                siteLogo: "LOGO:",
+                linkRequirements: "Requisits per a enllaços",
+                req1: "Contingut saludable del lloc web, sense informació dolenta",
+                req2: "Accés estable, sense publicitat excessiva",
+                req3: "Cal afegir el nostre lloc com a enllaç amic primer",
+                req4: "Són preferibles els llocs amb contingut rellevant o complementari",
+                existingLinks: "Enllaços amics existents",
+                linkExample1: "Exemple de lloc 1",
+                linkExample1Desc: "Aquest és un lloc web d'exemple",
+                linkExample2: "Exemple de lloc 2",
+                linkExample2Desc: "Aquest és un altre lloc web d'exemple",
+                linkExample3: "Exemple de lloc 3",
+                linkExample3Desc: "Aquest és el tercer lloc web d'exemple",
+                linkExample4: "Exemple de lloc 4",
+                linkExample4Desc: "Aquest és el quart lloc web d'exemple",
+                footer: "© 2025 elaina.cat",
+                navHome: "Inici",
+                navImgBed: "Xarxa d'imatges",
+                navCloudDrive: "Disc en núvol",
+                navAbout: "Sobre nosaltres",
+                navLinks: "Enllaços"
+            }
+        };
+
+        // 页面加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            // 移动端菜单切换
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // 语言切换功能
+            const langButtons = document.querySelectorAll('.lang-btn');
+            
+            // 自动检测浏览器语言
+            function detectBrowserLanguage() {
+                const browserLang = navigator.language || navigator.userLanguage;
+                if (browserLang.startsWith('zh')) {
+                    return 'zh';
+                } else if (browserLang.startsWith('ca')) {
+                    return 'ca';
+                } else {
+                    return 'en';
+                }
+            }
+            
+            // 根据检测到的语言自动切换
+            const defaultLang = detectBrowserLanguage();
+            switchLanguage(defaultLang);
+            
+            // 语言切换函数
+            function switchLanguage(lang) {
+                // 更新按钮样式
+                langButtons.forEach(btn => {
+                    btn.classList.remove('bg-black', 'text-white');
+                    btn.classList.add('hover:bg-gray-200');
+                });
+                document.getElementById(`lang-${lang}`).classList.add('bg-black', 'text-white');
+                document.getElementById(`lang-${lang}`).classList.remove('hover:bg-gray-200');
+                
+                // 更新页面文本
+                document.querySelectorAll('[data-i18n]').forEach(element => {
+                    const key = element.getAttribute('data-i18n');
+                    if (translations[lang][key]) {
+                        element.textContent = translations[lang][key];
+                    }
+                });
+            }
+            
+            // 绑定语言按钮点击事件
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.id.split('-')[1];
+                    switchLanguage(lang);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
+    
