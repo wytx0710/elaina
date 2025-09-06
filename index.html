@@ -33,6 +33,14 @@
             .transition-smooth {
                 transition: all 0.3s ease-in-out;
             }
+            .image-placeholder {
+                background-color: #e2e8f0;
+                filter: blur(8px);
+            }
+            .image-loaded {
+                filter: blur(0);
+                transition: filter 0.5s ease-out;
+            }
         }
     </style>
 </head>
@@ -71,11 +79,17 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <!-- 图片部分 -->
             <div class="space-y-6">
-                <div class="rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition-smooth">
-                    <img src="https://www.elaina.cat/assets/13.jpg" alt="伊蕾娜表情动图" class="w-full h-auto">
+                <div class="rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition-smooth relative">
+                    <!-- 模糊占位图 -->
+                    <div class="image-placeholder aspect-video w-full absolute top-0 left-0 z-0"></div>
+                    <!-- 实际图片，初始隐藏 -->
+                    <img src="https://www.elaina.cat/assets/13.jpg" alt="伊蕾娜表情动图" class="w-full h-auto opacity-0 transition-opacity 0.5s ease-in-out z-10 relative" onload="this.classList.add('opacity-100', 'image-loaded')">
                 </div>
-                <div class="rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition-smooth">
-                    <img src="https://www.elaina.cat/assets/12.jpg" alt="伊蕾娜另一表情动图" class="w-full h-auto">
+                <div class="rounded-xl overflow-hidden shadow-xl transform hover:scale-[1.02] transition-smooth relative">
+                    <!-- 模糊占位图 -->
+                    <div class="image-placeholder aspect-video w-full absolute top-0 left-0 z-0"></div>
+                    <!-- 实际图片，初始隐藏 -->
+                    <img src="https://www.elaina.cat/assets/12.jpg" alt="伊蕾娜另一表情动图" class="w-full h-auto opacity-0 transition-opacity 0.5s ease-in-out z-10 relative" onload="this.classList.add('opacity-100', 'image-loaded')">
                 </div>
             </div>
 
@@ -245,4 +259,3 @@
         });
     </script>
 </body></html>
-    
