@@ -61,7 +61,11 @@
             --aplayer-cover-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
             transition: all 0.3s ease !important;
         }
-
+        /* 音乐播放器额外配置 - 距离底部1px */
+        .aplayer .aplayer-body,
+        .aplayer.aplayer-withlist {
+            bottom: 1px !important;
+        }
         /* 音乐播放器进一步进行隐藏 */
         .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
             left: -66px !important;
