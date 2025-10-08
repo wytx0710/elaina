@@ -142,6 +142,16 @@
             .viewer-nav-btn:hover {
                 background: rgba(0, 0, 0, 0.8);
             }
+            /* 菜单动画 */
+            .menu-enter {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            .menu-enter-active {
+                opacity: 1;
+                transform: translateY(0);
+                transition: opacity 0.3s ease, transform 0.3s ease;
+            }
         }
     </style>
 </head>
@@ -165,21 +175,21 @@
     </div>
 
     <!-- 语言切换器 - 左上角 -->
-    <div class="fixed top-4 left-4 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-lg p-2 flex space-x-1">
+    <div class="fixed top-4 left-4 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-lg p-2 flex space-x-1 h-10 items-center">
         <button id="lang-zh" class="lang-btn px-3 py-1 rounded-full bg-black text-white transition-smooth">中文</button>
         <button id="lang-en" class="lang-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth">English</button>
         <button id="lang-ca" class="lang-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth">Català</button>
     </div>
 
     <!-- 右上角功能按钮 -->
-    <div class="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-lg p-2 flex space-x-1">
+    <div class="fixed top-4 right-4 z-50 bg-white/80 backdrop-blur-sm rounded-full shadow-lg p-2 flex space-x-1 h-10 items-center">
         <button id="menu-btn" class="function-btn px-3 py-1 rounded-full hover:bg-gray-200 transition-smooth" title="菜单">
             <i class="fa fa-bars"></i>
         </button>
     </div>
 
-    <!-- 菜单 (默认隐藏) - 已调整top值使其与语言切换区域平行 -->
-    <div id="menu-container" class="fixed top-4 right-24 z-40 bg-white rounded-xl shadow-lg w-48 hidden">
+    <!-- 菜单 (默认隐藏) - 改为向下弹出 -->
+    <div id="menu-container" class="fixed top-16 right-4 z-40 bg-white rounded-xl shadow-lg w-48 hidden menu-enter">
         <ul class="py-2">
             <li><a href="https://img.elaina.cat" class="block px-4 py-2 hover:bg-gray-100 transition-smooth" data-i18n="menuImgBed">图床</a></li>
             <li><a href="https://pan.elaina.cat" class="block px-4 py-2 hover:bg-gray-100 transition-smooth" data-i18n="menuCloudDrive">云盘</a></li>
@@ -341,15 +351,35 @@
                 });
             }
             
-            // 菜单按钮功能
+            // 菜单按钮功能 - 添加动画效果
             menuBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                menuContainer.classList.toggle('hidden');
+                
+                // 切换菜单显示状态
+                if (menuContainer.classList.contains('hidden')) {
+                    // 显示菜单并添加动画
+                    menuContainer.classList.remove('hidden');
+                    // 触发重排后添加激活类以启动动画
+                    setTimeout(() => {
+                        menuContainer.classList.add('menu-enter-active');
+                    }, 10);
+                } else {
+                    // 隐藏菜单并移除动画类
+                    menuContainer.classList.remove('menu-enter-active');
+                    setTimeout(() => {
+                        menuContainer.classList.add('hidden');
+                    }, 300); // 等待动画完成
+                }
             });
             
             // 点击页面其他地方关闭菜单
             document.addEventListener('click', function() {
-                menuContainer.classList.add('hidden');
+                if (!menuContainer.classList.contains('hidden')) {
+                    menuContainer.classList.remove('menu-enter-active');
+                    setTimeout(() => {
+                        menuContainer.classList.add('hidden');
+                    }, 300);
+                }
             });
             
             // 防止点击菜单内部时关闭
@@ -585,3 +615,4 @@
         });
     </script>
 </body></html>
+    
