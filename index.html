@@ -5,6 +5,8 @@
     <script src="https://tailwindcss.elaina.cat/3.4.17"></script>
     <link href="https://cdn.jsdmirror.com/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/lxgw-wenkai-webfont@1.7.0/lxgwwenkai-regular.css">
+    <!-- 引入Waline样式 -->
+    <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/@waline/client@v2/dist/waline.css" />
     <style>
         /* 全局字体样式 */
         * {
@@ -14,6 +16,21 @@
 
         body {
             font-family: 'LXGW WenKai';
+        }
+        
+        /* 评论区加载动画 */
+        .waline-loading {
+            text-align: center;
+            padding: 2rem;
+        }
+        .waline-loading i {
+            animation: spin 1.5s linear infinite;
+            font-size: 2rem;
+            color: #6b46c1;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
     <script>
@@ -152,6 +169,20 @@
                 transform: translateY(0);
                 transition: opacity 0.3s ease, transform 0.3s ease;
             }
+            /* 评论区样式优化 */
+            .waline-container {
+                transition: all 0.3s ease;
+            }
+            .waline-container .wl-comments,
+            .waline-container .wl-editor {
+                @apply rounded-lg border-gray-200;
+            }
+            .waline-container .wl-btn {
+                @apply bg-primary hover:bg-secondary text-white;
+            }
+            .waline-container .wl-count {
+                @apply text-xl font-bold text-title mb-4;
+            }
         }
     </style>
 </head>
@@ -248,50 +279,16 @@
             </div>
 
             <!-- Waline 评论框 -->
-            <div id="waline" class="bg-white rounded-2xl shadow-lg p-8 mt-8"></div>
-            <link rel="stylesheet" href="https://cdn.jsdmirror.com/npm/@waline/client@v2/dist/waline.css" />
-            <!-- 引入 Waline JS -->
-            <script src="https://cdn.jsdmirror.com/npm/@waline/client@2/dist/waline.js"></script>
-            <!-- 初始化 -->
-            <script>
-                Waline.init({
-                    el: '#waline',
-                    serverURL: 'https://waline.elaina.cat/',  // 替换为你的实际地址
-                    path: '{{ .RelPermalink }}',          // 当前页面路径
-                    emoji: [                              // 可选：自定义表情
-                        'https://cdn.jsdmirror.com/gh/walinejs/emojis@1.0.0/weibo',
-                    ],
-                    imageUploader: false, // 自定义图片上传方法。默认行为是将图片 Base 64 编码嵌入，你可以设置为 false 以禁用图片上传功能。
-                    search: false,          // 禁用gif表情包搜索
-                    login: "disable",       // 禁用登录，用户只能填写信息评论
-                    noCopyright: false,     // 是否显示页脚版权信息：本站评论功能使用 waline 实现！
-                    wordLimit: 1024,        // 评论字数限制。填入单个数字时为最大字数限制。设置为 0 时无限制。
-                    comment: true,          // 文章评论数统计，填入字符串时会作为 CSS 选择器。
-                    pageview: true,        // 文章浏览量统计，填入字符串时会作为 CSS 选择器。
-                    reaction: [
-                        // 为文章增加表情互动功能，设置为 true 提供默认表情，也可以通过设置表情地址数组来自定义表情图片，最大支持 8 个表情。
-                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_heart_eyes.png",
-                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_thumbsup.png",
-                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_zhoumei.png",
-                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_grievance.png",
-                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_dizzy_face.png",
-                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_slap.png",
-                    ],
-                    locale: {
-                        placeholder:
-                            "请注意：提交留言后，内容需审核通过后才会展示，请勿重复发布。",
-                        reaction0: "非常有用",
-                        reaction1: "有帮助",
-                        reaction2: "一般",
-                        reaction3: "无帮助",
-                        reaction4: "看不懂",
-                        reaction5: "有错误",
-                        reactionTitle: "本站内容对你有帮助吗？",
-                        sofa: "还没有人留言哦！快来抢沙发吧~",
-                        comment: "留言",
-                    },
-                });
-            </script>
+            <div class="bg-white rounded-2xl shadow-lg p-8 mt-8 waline-container">
+                <h2 class="text-2xl font-bold mb-6 text-title" data-i18n="commentsTitle">评论区</h2>
+                <div id="waline">
+                    <!-- 加载动画 -->
+                    <div class="waline-loading">
+                        <i class="fa fa-circle-o-notch"></i>
+                        <p class="mt-2" data-i18n="loadingComments">加载评论中...</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- 页脚 -->
@@ -300,6 +297,9 @@
             <p class="mt-1"><a href="https://icp.gov.moe/?keyword=20251799" target="_blank" class="hover:text-primary transition-smooth">萌ICP备20251799号</a></p>
         </footer>
     </div>
+
+    <!-- 引入 Waline JS -->
+    <script src="https://cdn.jsdmirror.com/npm/@waline/client@2/dist/waline.js"></script>
 
     <script>
         // 多语言文本数据
@@ -313,7 +313,10 @@
                 menuImgBed: "图床",
                 menuCloudDrive: "云盘",
                 menuRandomImageApi: "随机图片API",
-                menuFreeEmail: "免费邮箱"
+                menuFreeEmail: "免费邮箱",
+                commentsTitle: "评论区",
+                loadingComments: "加载评论中...",
+                walinePlaceholder: "请注意：提交留言后，内容需审核通过后才会展示，请勿重复发布。"
             },
             en: {
                 title: "Elaina —— The Ashen Witch",
@@ -324,7 +327,10 @@
                 menuImgBed: "Image Host",
                 menuCloudDrive: "Cloud Storage",
                 menuRandomImageApi: "Random Image API",
-                menuFreeEmail: "Free Email"
+                menuFreeEmail: "Free Email",
+                commentsTitle: "Comments",
+                loadingComments: "Loading comments...",
+                walinePlaceholder: "Note: Comments will be displayed after review. Please do not repost."
             },
             ca: {
                 title: "Elaina —— La Bruixa Cendra",
@@ -335,11 +341,65 @@
                 menuImgBed: "Xarxa d'imatges",
                 menuCloudDrive: "Disc en núvol",
                 menuRandomImageApi: "API d'imatges aleatòries",
-                menuFreeEmail: "Correu gratuït"
+                menuFreeEmail: "Correu gratuït",
+                commentsTitle: "Comentaris",
+                loadingComments: "Carregant comentaris...",
+                walinePlaceholder: "Nota: Els comentaris es mostraran després de ser revisats. No torneu a publicar."
             }
         };
 
-        // 图片轮播和其他功能
+        // 存储当前Waline实例
+        let walineInstance = null;
+        
+        // 初始化Waline评论系统
+        function initWaline(lang = 'zh') {
+            // 如果已有实例，先销毁
+            if (walineInstance) {
+                walineInstance.destroy();
+            }
+            
+            // 获取当前页面路径
+            const path = window.location.pathname || '/';
+            
+            // 初始化新实例
+            walineInstance = Waline.init({
+                el: '#waline',
+                serverURL: 'https://waline.elaina.cat/',
+                path: path,
+                emoji: [
+                    'https://cdn.jsdmirror.com/gh/walinejs/emojis@1.0.0/weibo',
+                ],
+                imageUploader: false,
+                search: false,
+                login: "disable",
+                noCopyright: false,
+                wordLimit: 1024,
+                comment: true,
+                pageview: true,
+                reaction: [
+                    "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_heart_eyes.png",
+                    "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_thumbsup.png",
+                    "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_zhoumei.png",
+                    "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_grievance.png",
+                    "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_dizzy_face.png",
+                    "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_slap.png",
+                ],
+                locale: {
+                    placeholder: translations[lang].walinePlaceholder,
+                    reaction0: "非常有用",
+                    reaction1: "有帮助",
+                    reaction2: "一般",
+                    reaction3: "无帮助",
+                    reaction4: "看不懂",
+                    reaction5: "有错误",
+                    reactionTitle: "本站内容对你有帮助吗？",
+                    sofa: "还没有人留言哦！快来抢沙发吧~",
+                    comment: "留言",
+                },
+            });
+        }
+
+        // 页面加载完成后初始化
         document.addEventListener('DOMContentLoaded', function() {
             // 语言切换相关元素
             const langButtons = document.querySelectorAll('.lang-btn');
@@ -380,6 +440,9 @@
             const defaultLang = detectBrowserLanguage();
             switchLanguage(defaultLang);
             
+            // 初始化评论系统
+            initWaline(defaultLang);
+            
             // 语言切换函数
             function switchLanguage(lang) {
                 // 更新按钮样式
@@ -395,6 +458,9 @@
                     const key = element.getAttribute('data-i18n');
                     element.textContent = translations[lang][key];
                 });
+                
+                // 更新评论区语言
+                initWaline(lang);
             }
             
             // 菜单按钮功能 - 添加动画效果
