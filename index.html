@@ -152,6 +152,14 @@
                 transform: translateY(0);
                 transition: opacity 0.3s ease, transform 0.3s ease;
             }
+            /* 评论区样式 */
+            #waline {
+                margin-top: 2rem;
+                padding: 2rem;
+                background-color: white;
+                border-radius: 1rem;
+                box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            }
         }
     </style>
 </head>
@@ -246,6 +254,52 @@
                 </p>
                 <p class="text-lg leading-relaxed" data-i18n="description3">伊蕾娜虽然年纪轻轻，但努力工作并精通所有魔法，性格沉稳认真，同时也充满好奇。因为向往着幼时读过的旅行故事，伊蕾娜随意地进行着漫长的旅行。她在这个广阔的世界里自由地漫步，接触着形形色色有趣的人，体味着人们美好的日常生活。作为一名旅人，伊蕾娜不带有任何目的地接触着各种国家的各色人群。</p>
             </div>
+
+            <!-- Waline 评论框 -->
+            <div id="waline"></div>
+            <link rel="stylesheet" href="https://cdn.jsdmirror.com/@waline/client@v3/dist/waline.css" />
+            <!-- 引入 Waline JS -->
+            <script src="https://cdn.jsdmirror.com/npm/@waline/client@2/dist/waline.js"></script>
+            <!-- 初始化 -->
+            <script>
+                Waline.init({
+                    el: '#waline',
+                    serverURL: 'https://waline.elaina.cat/',  // 替换为你的实际地址
+                    path: '{{ .RelPermalink }}',          // 当前页面路径
+                    emoji: [                              // 可选：自定义表情
+                        'https://cdn.jsdmirror.com/gh/walinejs/emojis@1.0.0/weibo',
+                    ],
+                    imageUploader: false, // 自定义图片上传方法。默认行为是将图片 Base 64 编码嵌入，你可以设置为 false 以禁用图片上传功能。
+                    search: false,          // 禁用gif表情包搜索
+                    login: "disable",       // 禁用登录，用户只能填写信息评论
+                    noCopyright: false,     // 是否显示页脚版权信息：本站评论功能使用 waline 实现！
+                    wordLimit: 1024,        // 评论字数限制。填入单个数字时为最大字数限制。设置为 0 时无限制。
+                    comment: true,          // 文章评论数统计，填入字符串时会作为 CSS 选择器。
+                    pageview: true,        // 文章浏览量统计，填入字符串时会作为 CSS 选择器。
+                    reaction: [
+                        // 为文章增加表情互动功能，设置为 true 提供默认表情，也可以通过设置表情地址数组来自定义表情图片，最大支持 8 个表情。
+                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_heart_eyes.png",
+                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_thumbsup.png",
+                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_zhoumei.png",
+                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_grievance.png",
+                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_dizzy_face.png",
+                        "https://npm.elemecdn.com/@waline/emojis@1.1.0/bilibili/bb_slap.png",
+                    ],
+                    locale: {
+                        placeholder:
+                            "请注意：提交留言后，内容需审核通过后才会展示，请勿重复发布。",
+                        reaction0: "非常有用",
+                        reaction1: "有帮助",
+                        reaction2: "一般",
+                        reaction3: "无帮助",
+                        reaction4: "看不懂",
+                        reaction5: "有错误",
+                        reactionTitle: "本站内容对你有帮助吗？",
+                        sofa: "还没有人留言哦！快来抢沙发吧~",
+                        comment: "留言",
+                    },
+                });
+            </script>
         </div>
 
         <!-- 页脚 -->
@@ -615,4 +669,3 @@
         });
     </script>
 </body></html>
-    
