@@ -124,6 +124,9 @@
                 width: 100%;
                 background-color: #f3f4f6; /* 添加背景色 */
                 cursor: zoom-in; /* 显示放大图标 */
+                /* 关键修改：隐藏图片加载失败时的默认提示 */
+                color: transparent; /* 使alt文本透明 */
+                text-indent: -9999px; /* 将alt文本移出可视区域 */
             }
             /* 图片加载占位符样式 - 灰色磨玻璃效果 */
             .image-placeholder {
@@ -250,7 +253,7 @@
             <button id="viewer-close" class="close-btn">
                 <i class="fa fa-times"></i>
             </button>
-            <img id="viewer-image" class="viewer-image" src="" alt="伊蕾娜大图">
+            <img id="viewer-image" class="viewer-image" src="" alt="">
             <div class="viewer-nav">
                 <button id="viewer-prev" class="viewer-nav-btn">
                     <i class="fa fa-chevron-left"></i>
@@ -296,19 +299,19 @@
                 <div id="carousel" class="flex transition-transform duration-500 ease-in-out h-full">
                     <!-- 使用data-src存储真实图片地址，实现懒加载 -->
                     <div class="w-full flex-shrink-0 carousel-slide">
-                        <img data-src="https://cdn.elaina.cat/image/01.jpg" alt="伊蕾娜1 - 戴着三角帽的魔女" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="0">
+                        <img data-src="https://cdn.elaina.cat/image/01.jpg" alt="" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="0">
                     </div>
                     <div class="w-full flex-shrink-0 carousel-slide">
-                        <img data-src="https://cdn.elaina.cat/image/02.jpg" alt="伊蕾娜2 - 灰之魔女" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="1">
+                        <img data-src="https://cdn.elaina.cat/image/02.jpg" alt="" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="1">
                     </div>
                     <div class="w-full flex-shrink-0 carousel-slide">
-                        <img data-src="https://cdn.elaina.cat/image/03.jpg" alt="伊蕾娜3 - 旅行中的魔女" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="2">
+                        <img data-src="https://cdn.elaina.cat/image/03.jpg" alt="" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="2">
                     </div>
                     <div class="w-full flex-shrink-0 carousel-slide">
-                        <img data-src="https://cdn.elaina.cat/image/04.jpg" alt="伊蕾娜4 - 魔法时刻" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="3">
+                        <img data-src="https://cdn.elaina.cat/image/04.jpg" alt="" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="3">
                     </div>
                     <div class="w-full flex-shrink-0 carousel-slide">
-                        <img data-src="https://cdn.elaina.cat/image/05.jpg" alt="伊蕾娜5 - 小时候的伊雷娜" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="4">
+                        <img data-src="https://cdn.elaina.cat/image/05.jpg" alt="" class="w-full flex-shrink-0 carousel-image image-placeholder" data-img-index="4">
                     </div>
                 </div>
                 
@@ -495,6 +498,13 @@
                 img.src = img.dataset.src;
                 // 移除占位符样式
                 img.classList.remove('image-placeholder');
+            };
+            
+            // 图片加载失败时保持占位符
+            tempImg.onerror = function() {
+                // 可以在这里添加加载失败的处理，比如显示通用错误图片
+                // 但我们选择保持占位符效果
+                img.classList.add('image-placeholder-error');
             };
         }
 
@@ -776,7 +786,17 @@
                         image.src = image.dataset.src;
                         image.classList.remove('image-placeholder');
                         viewerImage.src = image.src;
-                        viewerImage.alt = image.alt;
+                        viewerImage.alt = `伊蕾娜大图 ${index + 1}`;
+                        imageViewer.classList.add('active');
+                        viewerImage.setAttribute('data-current-index', index);
+                        document.body.style.overflow = 'hidden';
+                    };
+                    
+                    // 图片加载失败时的处理
+                    tempImg.onerror = function() {
+                        // 显示通用错误信息但不显示文件名
+                        viewerImage.src = '';
+                        viewerImage.alt = '图片加载失败';
                         imageViewer.classList.add('active');
                         viewerImage.setAttribute('data-current-index', index);
                         document.body.style.overflow = 'hidden';
@@ -784,7 +804,7 @@
                 } else {
                     // 图片已加载，直接显示
                     viewerImage.src = image.src;
-                    viewerImage.alt = image.alt;
+                    viewerImage.alt = `伊蕾娜大图 ${index + 1}`;
                     imageViewer.classList.add('active');
                     viewerImage.setAttribute('data-current-index', index);
                     document.body.style.overflow = 'hidden';
